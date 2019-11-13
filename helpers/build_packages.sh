@@ -295,7 +295,7 @@ if [ "$BUILDGG" = "1" ]; then
         droidmedia_version=$(git --git-dir external/droidmedia/.git describe --tags 2>/dev/null | sed -r "s/\-/\+/g")
         if [ -z "$droidmedia_version" ]; then
             # in case of shallow clone:
-            droidmedia_version=999.99999999.99
+            droidmedia_version=$(curl -s https://github.com/sailfishos/droidmedia/tags | grep "tag/" | head -1 | cut -d'"' -f2 | cut -d'/' -f6)
         fi
         rpm/dhd/helpers/pack_source_droidmedia-localbuild.sh "$droidmedia_version"
         mkdir -p hybris/mw/droidmedia-localbuild/rpm
@@ -318,7 +318,7 @@ if [ "$BUILDGG" = "1" ]; then
         audioflingerglue_version=$(git --git-dir external/audioflingerglue/.git describe --tags 2>/dev/null | sed -r "s/\-/\+/g")
         if [ -z "$audioflingerglue_version" ]; then
             # in case of shallow clone:
-            audioflingerglue_version=999.0.0
+            audioflingerglue_version=$(curl -s https://github.com/mer-hybris/audioflingerglue/tags | grep "tag/" | head -1 | cut -d'"' -f2 | cut -d'/' -f6)
         fi
         rpm/dhd/helpers/pack_source_audioflingerglue-localbuild.sh "$audioflingerglue_version"
         mkdir -p hybris/mw/audioflingerglue-localbuild/rpm

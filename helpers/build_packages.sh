@@ -313,9 +313,7 @@ if [ "$BUILDGG" = "1" ]; then
         minfo "Not building droidmedia and gstreamer1.0-droid due to the latter not being in patterns"
     fi
 
-    if grep -q "^- pulseaudio-modules-droid-hidl" "$pattern_lookup" &>/dev/null; then
-        minfo "Not building audioflingerglue and pulseaudio-modules-droid-glue due to pulseaudio-modules-droid-hidl in patterns"
-    elif grep -q "^- pulseaudio-modules-droid-glue" "$pattern_lookup" &>/dev/null; then
+    if grep -q "^- pulseaudio-modules-droid-glue" "$pattern_lookup" &>/dev/null; then
         audioflingerglue_version=$(git --git-dir external/audioflingerglue/.git describe --tags 2>/dev/null | sed -r "s/\-/\+/g")
         if [ -z "$audioflingerglue_version" ]; then
             # in case of shallow clone:

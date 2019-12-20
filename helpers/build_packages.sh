@@ -242,9 +242,10 @@ if [ "$BUILDMW" = "1" ]; then
             buildmw -u "https://github.com/mer-hybris/libgbinder" || die
             buildmw -u "https://github.com/mer-hybris/libgbinder-radio" || die
             buildmw -u "https://github.com/mer-hybris/bluebinder" || die
-            buildmw -u "https://github.com/mer-hybris/ofono-ril-binder-plugin" || die
+            # The following two packages are pre-downgraded to match the latest SFOS release to avoid build issues
+            buildmw -u "https://github.com/sailfishos-oneplus5/ofono-ril-binder-plugin" || die
             buildmw -u "https://github.com/mer-hybris/libncicore.git" || die
-            buildmw -u "https://github.com/mer-hybris/nfcd-binder-plugin" || die
+            buildmw -u "https://github.com/sailfishos-oneplus5/nfcd-binder-plugin" || die
         fi
         buildmw -u "https://github.com/mer-hybris/pulseaudio-modules-droid.git" \
                 -s rpm/pulseaudio-modules-droid.spec || die
@@ -273,15 +274,15 @@ if [ "$BUILDMW" = "1" ]; then
             buildmw -u "https://github.com/mer-hybris/geoclue-providers-hybris" \
                     -s rpm/geoclue-providers-hybris.spec || die
         fi
-        # build kf5bluezqt-bluez4 if not yet provided by Sailfish OS itself
-        sb2 -t $VENDOR-$DEVICE-$PORT_ARCH -m sdk-install -R zypper se kf5bluezqt-bluez4 > /dev/null
-        ret=$?
-        if [ $ret -eq 104 ]; then
-            buildmw -u "https://git.sailfishos.org/mer-core/kf5bluezqt.git" \
-                    -s rpm/kf5bluezqt-bluez4.spec || die
-            # pull device's bluez4 configs correctly
-            sb2 -t $VENDOR-$DEVICE-$PORT_ARCH -m sdk-install -R zypper remove bluez-configs-mer
+        # Additional MW for extra functionality on OnePlus 5(T) devices
+        if [[ "cheeseburger dumpling" = *"$DEVICE"* ]]; then
+            buildmw -u "https://github.com/sailfishos-oneplus5/triambience-daemon" || die
+            buildmw -u "https://github.com/sailfishos-oneplus5/onyx-triambience-settings-plugin" || die
+            buildmw -u "https://github.com/sailfishos-oneplus5/gesture-daemon" || die
+            buildmw -u "https://github.com/sailfishos-oneplus5/onyx-gesture-settings-plugin" || die
         fi
+        # Setup bluez5 & droid-config packages properly during initial build_packages run
+        [ -f "$ANDROID_ROOT/.first_${RELEASE}_${DEVICE}_build_done" ] || sb2 -t $VENDOR-$DEVICE-$PORT_ARCH -m sdk-install -R zypper -n in bluez5-obexd droid-config-$DEVICE droid-config-$DEVICE-bluez5 kf5bluezqt-bluez5 libcommhistory-qt5 libcontacts-qt5 libical obex-capability obexd-calldata-provider obexd-contentfilter-helper qt5-qtpim-versit qtcontacts-sqlite-qt5
     fi
     popd > /dev/null
 fi
@@ -338,6 +339,7 @@ fi
 
 if [ "$BUILDVERSION" = "1" ]; then
     buildversion
+    [ -f "$ANDROID_ROOT/.first_${RELEASE}_${DEVICE}_build_done" ] || touch "$ANDROID_ROOT/.first_${RELEASE}_${DEVICE}_build_done"
     echo "----------------------DONE! Now proceed on creating the rootfs------------------"
 fi
 

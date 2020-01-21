@@ -248,7 +248,7 @@ if [ "$BUILDMW" = "1" ]; then
         fi
         buildmw -u "https://github.com/mer-hybris/pulseaudio-modules-droid.git" \
                 -s rpm/pulseaudio-modules-droid.spec || die
-        if [ $android_version_major -ge 9 ]; then
+        if [ $android_version_major -ge 8 ]; then
             buildmw -u "https://github.com/mer-hybris/pulseaudio-modules-droid-hidl.git" || die
         fi
         buildmw -u "https://github.com/nemomobile/mce-plugin-libhybris.git" || die
@@ -259,7 +259,7 @@ if [ "$BUILDMW" = "1" ]; then
         buildmw -u "https://github.com/mer-hybris/qt5-qpa-hwcomposer-plugin" || die
         buildmw -u "https://git.sailfishos.org/mer-core/qtscenegraph-adaptation.git" \
                 -s rpm/qtscenegraph-adaptation-droid.spec || die
-        if [ $android_version_major -ge 9 ]; then
+        if [ $android_version_major -ge 8 ]; then
             buildmw -u "https://git.sailfishos.org/mer-core/sensorfw.git" \
                     -s rpm/sensorfw-qt5-binder.spec || die
         else

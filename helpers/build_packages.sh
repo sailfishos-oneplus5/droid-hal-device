@@ -313,7 +313,7 @@ if [ "$BUILDGG" = "1" ]; then
         minfo "Not building droidmedia and gstreamer1.0-droid due to the latter not being in patterns"
     fi
 
-    if grep -q "^- pulseaudio-modules-droid-glue" "$pattern_lookup" &>/dev/null; then
+    if grep -qE "^- pulseaudio-modules-droid-glue|^- audioflingerglue" "$pattern_lookup" &>/dev/null; then
         audioflingerglue_version=$(git --git-dir external/audioflingerglue/.git describe --tags 2>/dev/null | sed -r "s/\-/\+/g")
         if [ -z "$audioflingerglue_version" ]; then
             # in case of shallow clone:
@@ -329,9 +329,13 @@ if [ "$BUILDGG" = "1" ]; then
         sed -ie "s/0.0.0/$audioflingerglue_version/" hybris/mw/audioflingerglue-localbuild/rpm/audioflingerglue.spec
         mv hybris/mw/audioflingerglue-"$audioflingerglue_version".tgz hybris/mw/audioflingerglue-localbuild
         buildmw -u "audioflingerglue-localbuild" || die
-        buildmw -u "https://github.com/mer-hybris/pulseaudio-modules-droid-glue.git" || die
+        if grep -q "^- pulseaudio-modules-droid-glue" "$pattern_lookup" &>/dev/null; then
+            buildmw -u "https://github.com/mer-hybris/pulseaudio-modules-droid-glue.git" || die
+        else
+            minfo "Not building pulseaudio-modules-droid-glue due to it not being in patterns"
+        fi
     else
-        minfo "Not building audioflingerglue and pulseaudio-modules-droid-glue due to the latter not being in patterns"
+        minfo "Not building audioflingerglue or pulseaudio-modules-droid-glue due to neither being in patterns"
     fi
 fi
 

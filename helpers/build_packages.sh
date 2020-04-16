@@ -282,6 +282,10 @@ if [ "$BUILDMW" = "1" ]; then
             buildmw -u "https://github.com/sailfishos-oneplus5/onyx-triambience-settings-plugin" || die
             buildmw -u "https://github.com/sailfishos-oneplus5/gesture-daemon" || die
             buildmw -u "https://github.com/sailfishos-oneplus5/onyx-gesture-settings-plugin" || die
+            # We need dummy_netd for cellular data on Pie (and above) bases
+            if [ $android_version_major -ge 9 ]; then
+                buildmw -u "https://github.com/mer-hybris/dummy_netd.git" || die
+            fi
         fi
         # Setup bluez5 & droid-config packages properly during initial build_packages run
         [ -f "$ANDROID_ROOT/.first_${RELEASE}_${DEVICE}_build_done" ] || sb2 -t $VENDOR-$DEVICE-$PORT_ARCH -m sdk-install -R zypper -n in bluez5-obexd droid-config-$DEVICE droid-config-$DEVICE-bluez5 kf5bluezqt-bluez5 libcommhistory-qt5 libcontacts-qt5 libical obex-capability obexd-calldata-provider obexd-contentfilter-helper qt5-qtpim-versit qtcontacts-sqlite-qt5

@@ -245,6 +245,8 @@ if [ "$BUILDMW" = "1" ]; then
             # The following two packages are pre-downgraded to match the latest SFOS release to avoid build issues
             buildmw -u "https://github.com/sailfishos-oneplus5/ofono-ril-binder-plugin" || die
             buildmw -u "https://github.com/mer-hybris/libncicore.git" || die
+            buildmw -u "https://git.sailfishos.org/mer-core/nfcd.git" || die
+            buildmw -u "https://github.com/mer-hybris/libnciplugin" || die
             buildmw -u "https://github.com/sailfishos-oneplus5/nfcd-binder-plugin" || die
         fi
         buildmw -u "https://github.com/mer-hybris/pulseaudio-modules-droid.git" \

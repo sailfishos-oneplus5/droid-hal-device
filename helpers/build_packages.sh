@@ -380,7 +380,8 @@ zypper\n\
 strace\n\
 htop\n\
 less\n\
-nano" -i "$ANDROID_ROOT/Jolla-@RELEASE@-$DEVICE-@ARCH@.ks"
+nano\n\
+rsync" -i "$ANDROID_ROOT/Jolla-@RELEASE@-$DEVICE-@ARCH@.ks"
     fi
     hybris/droid-configs/droid-configs-device/helpers/process_patterns.sh
     # Check if we need to build loop or fs image

@@ -328,7 +328,7 @@ build() {
     for SPEC in $SPECS ; do
         minfo "Building $SPEC"
         mb2 -s $SPEC -t $VENDOR-$DEVICE-$PORT_ARCH $NO_AUTO_VERSION \
-            build >>$LOG 2>&1|| die "building of package failed"
+            build -j $(nproc) >>$LOG 2>&1|| die "building of package failed"
         # RPMS directory gets emptied when mb2 starts, so let's put packages
         # to the side in case of multiple .spec file builds
         mkdir RPMS.saved &>/dev/null

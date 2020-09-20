@@ -425,6 +425,21 @@ if [ "$BUILDIMAGE" = "1" ]; then
         # Clear out extra store repositories from kickstart if exist
         sed -i "/store-repository.jolla.com/d" "$ks"
         [ -n "$RELEASE" ] || die 'Please set the desired RELEASE variable in ~/.hadk.env to build an image for'
+        # Fixup local building since droid-config-cheeseburger cc43ea3 & 51542cb commits
+        if grep -q "jolla-configuration-${DEVICE}" "$ANDROID_ROOT/Jolla-@RELEASE@-$DEVICE-@ARCH@.ks"; then
+            sed -e "s/jolla-configuration-${DEVICE}/@Jolla Configuration ${DEVICE}/" -e "/^@Jolla Configuration ${DEVICE}/i jolla-developer-mode\n\
+busybox-static\n\
+net-tools\n\
+openssh-clients\n\
+openssh-server\n\
+vim-enhanced\n\
+zypper\n\
+strace\n\
+htop\n\
+less\n\
+nano\n\
+rsync" -i "$ANDROID_ROOT/Jolla-@RELEASE@-$DEVICE-@ARCH@.ks"
+        fi
     fi
     if [ -n $RELEASE ]; then
         release_version="-"$RELEASE

@@ -325,8 +325,8 @@ if [ "$BUILDGG" = "1" ]; then
         cd external/$pkg || die "Could not change directory to external/$pkg"
         droidmedia_version=$(get_package_version "$pkg")
         if [ -z "$droidmedia_version" ]; then
-            # Could not obtain version, function call will have shown the error
-            exit 1
+            # Could not obtain version, fetch latest tag in case of a shallow clone
+            droidmedia_version=$(curl -s https://github.com/sailfishos/droidmedia/tags | grep "tag/" | head -1 | cut -d'"' -f2 | cut -d'/' -f6)
         fi
         cd ../..
         rpm/dhd/helpers/pack_source_droidmedia-localbuild.sh "$droidmedia_version" ||

@@ -291,6 +291,9 @@ if [ "$BUILDMW" = "1" ]; then
             buildmw -u "https://github.com/mer-hybris/geoclue-providers-hybris" \
                     -s rpm/geoclue-providers-hybris.spec || die
         fi
+        if [ $android_version_major -ge 9 ]; then
+            buildmw -Nu "https://github.com/mer-hybris/dummy_netd.git" || die
+        fi
         # Additional MW for extra functionality on OnePlus 5(T) devices
         if [[ "cheeseburger dumpling" = *"$DEVICE"* ]]; then
             buildmw -u "https://github.com/sailfishos-oneplus5/triambience-daemon" || die

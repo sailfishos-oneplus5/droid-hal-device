@@ -346,7 +346,7 @@ if [ "$BUILDGG" = "1" ]; then
         fi
         if grep -qs "^- gmp-droid" "$pattern_lookup" ||
            grep -qs "^Requires: gmp-droid" "$metapackage_lookup"; then
-            buildmw -u "https://github.com/sailfishos/gmp-droid.git" || die
+            buildmw -u "https://github.com/sailfishos-oneplus5/gmp-droid.git" || die
         else
             minfo "Not found in patterns: gmp-droid. Browser video acceleration will not be available"
         fi

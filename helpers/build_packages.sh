@@ -252,7 +252,7 @@ if [ "$BUILDMW" = "1" ]; then
             fi
         done
     else
-        buildmw -u "https://github.com/mer-hybris/libhybris" || die
+        buildmw -Nu "https://github.com/mer-hybris/libhybris" || die
         buildmw -u "https://github.com/mer-hybris/libgbinder" || die
 
         if [ $android_version_major -ge 8 ]; then
@@ -302,10 +302,8 @@ if [ "$BUILDMW" = "1" ]; then
             buildmw -u "https://github.com/sailfishos-oneplus5/onyx-gesture-settings-plugin" || die
             # Community fingerprint daemon integration
             buildmw -u "sailfish-fpd-community" \
-                    -s rpm/droid-biometry-fp.spec || die
-            # FIXME: Start building this without wiping RPMs for droid-biometry-fp!
-            #buildmw -u "sailfish-fpd-community" \
-            #        -s rpm/sailfish-fpd-community.spec || die
+                    -s rpm/droid-biometry-fp.spec \
+                    -s rpm/sailfish-fpd-community.spec || die
         fi
     fi
     popd > /dev/null

@@ -266,11 +266,11 @@ if [ "$BUILDMW" = "1" ]; then
             buildmw -u "https://git.sailfishos.org/mer-core/libglibutil.git" || die
             buildmw -u "https://github.com/mer-hybris/libgbinder-radio" || die
             buildmw -u "https://github.com/mer-hybris/bluebinder" || die
-            buildmw -u "https://github.com/mer-hybris/ofono-ril-binder-plugin" || die
-            buildmw -u "https://github.com/mer-hybris/libncicore.git" || die
-            buildmw -u "https://git.sailfishos.org/mer-core/nfcd.git" || die
-            buildmw -u "https://github.com/mer-hybris/libnciplugin.git" || die
-            buildmw -u "https://github.com/mer-hybris/nfcd-binder-plugin" || die
+            buildmw -u "https://github.com/mer-hybris/ofono-ril-binder-plugin" -r 1.0.14 || die
+            buildmw -u "https://github.com/mer-hybris/libncicore.git" -r 1.1.10 || die
+            buildmw -u "https://git.sailfishos.org/mer-core/nfcd.git" -r 1.0.35 || die
+            buildmw -u "https://github.com/mer-hybris/libnciplugin.git" -r 1.0.7 || die
+            buildmw -u "https://github.com/mer-hybris/nfcd-binder-plugin" -r 1.1.3 || die
         fi
         buildmw -u "https://github.com/mer-hybris/pulseaudio-modules-droid.git" \
                 -s rpm/pulseaudio-modules-droid.spec || die

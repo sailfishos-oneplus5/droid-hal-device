@@ -366,7 +366,7 @@ if [ "$BUILDGG" = "1" ]; then
         buildmw -Nu "droidmedia-localbuild" || die
         if grep -qs "^- gstreamer1.0-droid" "$pattern_lookup" ||
            grep -qs "^Requires: gstreamer1.0-droid" "$metapackage_lookup"; then
-            buildmw -u "https://github.com/sailfishos/gst-droid.git" || die
+            buildmw -u "https://github.com/sailfishos/gst-droid.git" -r 0.20201104.0 || die
         else
             minfo "Not found in patterns: gstreamer1.0-droid. Camera and app video playback will not be available"
         fi
